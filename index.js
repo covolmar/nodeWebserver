@@ -6,7 +6,7 @@ var fs = require('fs');
 http.createServer(function (req, res) {
   console.log("new Connection to the amazing WinKP HTTP Update Server!");
   if(req.url === "/update") {
-    fs.readFile('C:/Data/WinKPUpdates.txt', 'utf8', function(err, data) {
+    fs.readFile('C:/Paket/WinKPInstallCD/WinKPUpdates.txt', 'utf8', function(err, data) {
       if (err) throw err;
       res.writeHead(200, {"Content-Type": "text/html"});
       res.write(data);
@@ -15,8 +15,17 @@ http.createServer(function (req, res) {
       //console.log(data);
     });
   }
+  else if (req.url === "/upgrade") {
+    fs.readFile('C:/Paket/WinKPInstallCD/RIFLEX WinKP 2.13.03.msi', function(err, data) {
+      if (err) throw err;
+      res.writeHead(200, {"Content-Type": "application/exe"});
+      res.write(data);
+      res.end();
+      console.log("Upgrade was requested from " + req.hostname);
+    });
+  }
   else if (req.url === "/patch") {
-    fs.readFile('C:/Data/RIFLEX WinKP 2.13.03 Patch New SSP.exe', function(err, data) {
+    fs.readFile('C:/Paket/WinKPInstallCD/RIFLEX WinKP Patch 2.13.03.msp', function(err, data) {
       if (err) throw err;
       res.writeHead(200, {"Content-Type": "application/exe"});
       res.write(data);
@@ -24,8 +33,8 @@ http.createServer(function (req, res) {
       console.log("Patch was requested from " + req.hostname);
     });
   }
-  else if (req.url === "/upgrade") {
-    fs.readFile('C:/Data/RIFLEX WinKP 2.13.04.exe', function(err, data) {
+  else if (req.url === "/patch/buildIncrement") {
+    fs.readFile('C:/Paket/WinKPInstallCD/RIFLEX WinKP PatchForBuild 2.13.03.msp', function(err, data) {
       if (err) throw err;
       res.writeHead(200, {"Content-Type": "application/exe"});
       res.write(data);
